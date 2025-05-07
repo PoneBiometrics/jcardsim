@@ -132,7 +132,7 @@ public final class ByteContainer {
         }
         Util.arrayCopy(buff, offset, data, (short) 0, length);
         // current length
-        this.length = length;
+        this.length = (short) data.length;
     }
 
     /**
