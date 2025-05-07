@@ -1,11 +1,13 @@
-jCardSim (Official repo of the [jCardSim](http://jcardsim.org) project)
+jCardSim
 ========
 
-### Congratulations! jCardSim has won [Duke's Choice 2013 Award](https://www.java.net/dukeschoice/2013)!
+### Pone Biometrics version of jCardSim includes:
 
-![alt text](https://licelus.com/wp-content/uploads/DCA2013_Badge_Winner.jpg "jCardSim is a winner of Duke's Choice 2013")
-
-**Please note** that we moved our code repository from Google Code to GitHub.
+* fixes ByteContainer such that crypto isn't wrong when secret key BigInteger byte representation is less than 32bytes (see https://github.com/licel/jcardsim/issues/209 )
+* soft reconnects on VSmartCard socket errors
+* uses SecureRandom in KeyPair instead of always predictable SecureRandomNullGenerator
+* upgraded javacard sdk to version 3.20 (still using api version 3.0.5)
+* stop trying to load `com.licel.globalplatform.*` stuff
 
 jCardSim is an open source simulator for Java Card, v3.0.5:
 
