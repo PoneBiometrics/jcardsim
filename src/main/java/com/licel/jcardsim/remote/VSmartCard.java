@@ -49,9 +49,13 @@ public class VSmartCard {
     
     Simulator sim;
     ReloadThread reloader;
+    static String chost;
+    static int cport;
     
     public VSmartCard(String host, int port) throws IOException {
         VSmartCardTCPProtocol driverProtocol = new VSmartCardTCPProtocol();
+        chost = host;
+        cport = port;
         driverProtocol.connect(host, port);
         startThread(driverProtocol);
     }
@@ -217,6 +221,24 @@ public class VSmartCard {
                             final byte[] reply = CardManager.dispatchApdu(sim, apdu);
                             driverProtocol.writeData(reply);
                             break;
+                    }
+                } catch (IOException e) {
+                    driverProtocol.disconnect();
+                    System.err.println("socket disconnect. reconnecting!");
+                    boolean disconnected = true;
+                    while (disconnected) {
+                        try {
+                            driverProtocol.connect(chost, cport);
+                        }catch (IOException ine) {
+                            System.err.println(ine + " " + chost + ":" + cport);
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException ie) {}
+                        }
+                        finally {
+                            disconnected = false;
+                            System.out.println("socket reconnected");
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace(System.err);
