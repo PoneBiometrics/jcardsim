@@ -26,14 +26,7 @@ import javacard.framework.Util;
 public class CardManager implements CardManagerInterface {
     private static CardManagerInterface impl;
     static {
-        System.out.println("Trying to load an instance of com.licel.globalplatform.CardManager");
-        try {
-            impl = (CardManagerInterface)Class.forName("com.licel.globalplatform.CardManager").newInstance();
-            System.out.println("Succesfully loaded the instance!");
-        } catch (Throwable ex) {
-            System.out.println("Failed to load the instance! Will use the default CardManager");
-            impl = new CardManager();
-        }
+        impl = new CardManager();
     }
     public static byte[] dispatchApdu(JavaCardInterface sim, byte[] capdu) {
         return impl.dispatchApduImpl(sim, capdu);
