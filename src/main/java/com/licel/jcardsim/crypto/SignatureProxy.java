@@ -70,11 +70,10 @@ public class SignatureProxy {
             case Signature.ALG_RSA_MD5_PKCS1_PSS:
             case Signature.ALG_RSA_RIPEMD160_PKCS1_PSS:
             case Signature.ALG_RSA_RIPEMD160_ISO9796_MR:
-                System.out.println("getInstance of assymetric algo: " + algorithm);
                 try {
                     instance = new AsymmetricSignatureImpl(algorithm);
-                    System.out.println("getInstance of assymetric algo: " + algorithm + " is OK!");
                 } catch(Exception e) {
+                    System.err.println("fail getInstance of asymmetric algo: " + algorithm);
                     e.printStackTrace();
                     e.getCause().printStackTrace();
                     CryptoException.throwIt(CryptoException.INVALID_INIT);
