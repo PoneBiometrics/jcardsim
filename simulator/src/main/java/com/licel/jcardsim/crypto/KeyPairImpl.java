@@ -42,7 +42,7 @@ public final class KeyPairImpl {
     AsymmetricCipherKeyPairGenerator engine;
     PrivateKey privateKey;
     PublicKey publicKey;
-    SecureRandom rnd = new SecureRandomNullProvider();
+    SecureRandom rnd = new SecureRandom();
     KeyGenerationParameters keyGenerationParameters;
 
     /**
