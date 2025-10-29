@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.martinpaljak</groupId>
-    <version>25.12.02-SNAPSHOT</version>
+    <version>3.0.5-pone3</version>
     <packaging>pom</packaging>
     <url>https://github.com/martinpaljak/JCardEngine</url>
     <artifactId>jcardengine-package</artifactId>
