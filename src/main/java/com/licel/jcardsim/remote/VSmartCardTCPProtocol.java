@@ -25,6 +25,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.Socket;
+import java.net.ServerSocket;
+import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
+import jdk.net.ExtendedSocketOptions;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +38,7 @@ import java.util.concurrent.TimeUnit;
  * @author alex@cooperi.net
  */
 public class VSmartCardTCPProtocol {
+    private ServerSocket server;
     private Socket socket;
     private InputStream  dataInput;
     private OutputStream dataOutput;
@@ -46,18 +51,32 @@ public class VSmartCardTCPProtocol {
     public static final int APDU = -1;
 
     public void connect(String host, int port) throws IOException {
-        socket = new Socket(host, port);
-
+        
+        socket = new Socket();
         try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException ignore) {}
+            System.out.println("attempt connect " + host + ":" + port);
+            socket.connect(new InetSocketAddress(host, port), 150);
+        } catch (SocketTimeoutException ignored) {
+            System.out.println("timeout, serve  :" + port);
+            server = new ServerSocket(port);
+            server.setReuseAddress(true);
+            socket = server.accept();
+            System.out.println("accepted:" + socket.getInetAddress());
+        }
+        socket.setKeepAlive(true);
+        socket.setOption(ExtendedSocketOptions.TCP_KEEPIDLE, 1);
+        socket.setOption(ExtendedSocketOptions.TCP_KEEPCOUNT, 1);
+        socket.setOption(ExtendedSocketOptions.TCP_KEEPINTERVAL, 1);
 
         dataInput   = socket.getInputStream();
         dataOutput  = socket.getOutputStream();
     }
 
     public void disconnect() {
-        closeSocket(socket);
+        try {
+            server.close();
+            socket.close();
+        } catch (IOException ignored) {}
     }
     
     public boolean isClosed() {
@@ -93,12 +112,6 @@ public class VSmartCardTCPProtocol {
         buf[1] = (byte)(data.length & 0xFF);
         System.arraycopy(data, 0, buf, 2, data.length);
         dataOutput.write(buf);
-    }
-
-    private void closeSocket(Socket sock) {
-        try {
-            sock.close();
-        } catch (IOException ignored) {}
     }
 
     private void read(byte[] buf, InputStream stream) throws IOException {
