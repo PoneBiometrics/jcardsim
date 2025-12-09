@@ -71,16 +71,6 @@ public class JavaCardApiProcessor {
         proxyExceptionClass(buildDir, "javacard.framework.SystemException");
         proxyExceptionClass(buildDir, "javacard.framework.TransactionException");
         proxyExceptionClass(buildDir, "javacard.framework.UserException");
-        proxyClass(buildDir, "com.licel.jcardsim.framework.UtilProxy", "javacard.framework.Util", false);
-        proxyClass(buildDir, "com.licel.jcardsim.framework.OwnerPINProxy", "javacard.framework.OwnerPIN", false);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.ChecksumProxy", "javacard.security.Checksum", true);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.CipherProxy", "javacardx.crypto.Cipher", true);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.KeyAgreementProxy", "javacard.security.KeyAgreement", true);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.KeyPairProxy", "javacard.security.KeyPair", false);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.KeyBuilderProxy", "javacard.security.KeyBuilder", true);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.MessageDigestProxy", "javacard.security.MessageDigest", true);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.RandomDataProxy", "javacard.security.RandomData", true);
-        proxyClass(buildDir, "com.licel.jcardsim.crypto.SignatureProxy", "javacard.security.Signature", true);
         proxyClass(buildDir, "com.licel.jcardsim.biometry.BioBuilderDebug", "javacardx.biometry.BioBuilder", true);
         proxyExceptionClass(buildDir, "javacard.framework.service.ServiceException");
         proxyExceptionClass(buildDir, "javacard.security.CryptoException");
